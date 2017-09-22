@@ -1,7 +1,9 @@
-# I pledge my honor that I have abided by the Stevens Honor System
-# 
-# By Tim Zheng 
-# 14 Sep 2017
+"""
+ I pledge my honor that I have abided by the Stevens Honor System
+
+ By Tim Zheng
+ 14 Sep 2017
+"""
 
 #K360
 import sys
