@@ -105,5 +105,10 @@ def fib(n):
     return fib(n - 1) + fib(n - 2)
 
 
-print(fib(20))
+# Linear Recursion
+def myFilter(f, l):
+    return [] if l == [] else ([l[0]] if f(l[0]) else []) + myFilter(f, l[1:])
+
+
+print(myFilter(lambda x: x % 2 == 0, [0,0,2,3,0]))
 

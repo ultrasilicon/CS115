@@ -84,9 +84,9 @@ def take(n, L):
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 def drop(n, L):
     '''Returns the list L[n:].'''
-    if n == len(L):
-        return []
-    return drop(n, take(len(L) - 1, L)) + [L[len(L) - 1]]
+    if n == 0:
+        return L
+    return drop(n - 1, L[1:])
 
 
 # def change(money, coinSystem):
