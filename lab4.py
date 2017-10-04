@@ -4,6 +4,7 @@
  By Tim Zheng 
  29 Sep 2017
 """
+from cs115 import filter
 
 def knapsack(capacity, itemList):
     """which returns both the maximum value and the list of items (itemList) that make this value, without exceeding the capacity of your knapsack"""
@@ -19,4 +20,3 @@ def knapsack(capacity, itemList):
         return [itemList[0][1] + use_it[0]] + [[itemList[0]] + use_it[1]]
     else:
         return [lose_it[0]] + [lose_it[1]]
-
