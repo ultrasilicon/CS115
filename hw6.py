@@ -50,10 +50,7 @@ def compress(s):
             return "1111100000"  + compress_by_section([lst[0][0] + [lst[0][1]-31]] + lst[1:], maxLen)
         return completeFiveDigit(numToBinary(lst[0][1] - 1)) + compress_by_section(lst[1:], maxLen)
 
-    if s[0] == "1":
-        return "00000" + compress_by_section(compress_helper(s, ["0",0]), MAX_RUN_LENGTH)[1:]
-    else:
-        return compress_by_section(compress_helper(s, ["0",0]), MAX_RUN_LENGTH)
+    return compress_by_section(compress_helper(s, ["0",0]), MAX_RUN_LENGTH)
 
 
 
@@ -61,8 +58,7 @@ def decompress(s):
     def decompress_by_section(s, blockSize):
         if s == "":
             return []
-        if len(s) < blockSize:
-            return [binaryToNum(s)]
+        print([binaryToNum(s[0:blockSize]) + 1])
         return [binaryToNum(s[0:blockSize]) + 1] + decompress(s[blockSize:]) # first arg +1
 
 
@@ -73,8 +69,8 @@ def decompress(s):
 
     return decompress_by_section(s, COMPRESSED_BLOCK_SIZE)
 
-
-print(decompress(compress("10001100000111100001111000011110")))
+print(compress("0001100000111100001111000011110"))
+print(decompress("0000011111"))
 
 
 
