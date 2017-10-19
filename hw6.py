@@ -1,7 +1,7 @@
 '''
-Created on _______________________
-@author:   _______________________
-Pledge:    _______________________
+Created on Oct. 11 2017
+@author: Han Zheng
+Pledge: "I pledge my honor that I have abided by the Stevens Honor System." - hzheng12
 
 CS115 - Hw 6
 '''
@@ -78,6 +78,14 @@ def compression(s):
     '''return the compression ratio of my compression algorithm'''
     return len(compress(s)) / len(s)
 
+# Penguin
+print(compression("00011000"+"00111100"*3 + "01111110"+"11111111"+"00111100"+"00100100"))
+# Smile
+print(compression("0"*8 + "01100110"*2 + "0"*8 + "00001000" + "01000010" + "01111110" + "0"*8))
+# Five
+print(compression("1"*9 + "0"*7 + "10000000"*2 + "1"*7 + "0" + "00000001"*2 + "1"*7 + "0"))
+
+''' This compression algorithm works better if there are more consecutive 1 and 0. However, if there are more alternating 0 and 1, the compression rate is very low'''
 
 
 

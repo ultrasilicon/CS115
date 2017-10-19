@@ -1,0 +1,14 @@
+# divtwo.hmmm
+# Han Zheng - Oct. 19 2017
+# Computes the floor(x/y)
+
+0	read r1			# read dividend from user
+1	write r1		# echo the input
+2	read r2			# read divisor
+3	write r2		# echo the input
+4	jeqzn r2 7	# jump to line 7 if trying to divide by 0
+5	div r3 r1 r2	# divide the user input
+6	jump 8			# lll
+7	setn r3 0		# set r3 to 0
+8	write r3		# print the result
+9	halt
