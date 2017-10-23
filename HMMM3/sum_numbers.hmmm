@@ -1,0 +1,16 @@
+# sum_number.hmmm
+# Count..
+  
+0   read    r1          # read r1
+1   setn    r2  0       # init r2 = 0
+2   setn    r3  0       # init r3 = 0
+3   jnezn   r1  7       # jump if r1 == 0
+4   write   r3          # print output
+5   jumpn   12          # go to end
+6   addn    r2  1       # 
+7   write   r2          #  
+8   add     r3  r3  r3  # 
+9   addn    r1  -1      #
+10  jumpn   4           #
+11  halt
+
