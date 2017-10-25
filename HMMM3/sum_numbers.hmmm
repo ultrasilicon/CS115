@@ -6,7 +6,7 @@
 2   setn    r3  0       # init r3 = 0
 3   jnezn   r1  7       # jump if r1 == 0
 4   write   r3          # print output
-5   jumpn   12          # go to end
+5   jumpn   11          # go to end
 6   addn    r2  1       # 
 7   write   r2          #  
 8   add     r3  r3  r3  # 
