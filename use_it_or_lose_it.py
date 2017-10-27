@@ -13,7 +13,11 @@ def powerSet(lst):
         return [[]]
     lose_it = powerSet(lst[1:])
     use_it = map(lambda subset: [lst[0]] + subset, lose_it)
+
     return lose_it + use_it
+
+
+print(powerSet([1, 2, 3, 4, 5]))
 
 
 def subSet(target, lst):
