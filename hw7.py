@@ -57,4 +57,3 @@ def addB(S, T):
         return addBHelper(FullAdder[(C, S[-1], T[-1])][1], S[:-1], T[:-1]) + FullAdder[(C, S[-1], T[-1])][0]
     return addBHelper("0", S, T)
 
-print(addB("011", "100"))
