@@ -1,6 +1,6 @@
 '''
-@author:
-Pledge:
+@author: Han Zheng
+Pledge: "I pledge my honor that I have abided by the Stevens Honor System." - hzheng12
 
 CS115 - Hw 9
 
