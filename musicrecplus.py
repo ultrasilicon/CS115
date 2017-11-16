@@ -10,7 +10,10 @@ from pathlib import Path
 
 database = {}
 myName = ""
-firstOpen = True
+
+
+def isPrivate(s):
+    return s[-1] == '$'
 
 
 def writeFile(path):
@@ -32,22 +35,16 @@ def writeRawData(file):
         for artist in sorted(database[user]):
             artists += artist + ","
         artists = artists[:-1]
-        print(artists)
-        file.write(user + ":" + artists)
+        print("writen: ", artists)
+        file.write(user + ":" + artists + "\n")
 
 
 def parseRawData(dat):
     ret = {}
-    for line in dat.readlines():
-        user = []
+    for line in dat.read().splitlines():
         fullName, artists = line.split(':')
         artistList = artists.split(',')
-        # if any(c == '$' for c in fullName):
-        #     fullName.replace('$', '')
-        #     private = True
-        # else:
-        #     private = False
-        ret[fullName] = [sorted(artistList)]
+        ret[fullName] = sorted(artistList)
         print(ret)
         print("parse------")
     return ret
@@ -55,10 +52,11 @@ def parseRawData(dat):
 
 def readFile(path):
     """read from musicrecolus.txt"""
+    global database
     my_file = Path(path)
     if my_file.is_file():
         file = open(my_file, "r")
-        fileContent = parseRawData(file)
+        database = parseRawData(file)
         file.close()
         return True
     file = open(my_file, "w+")
@@ -66,26 +64,31 @@ def readFile(path):
     return False
 
 
-def setName():
+def checkName():
     global myName
-    myName = input("Enter your name (put a $ symbol after your name if you wish your preferences to remain private):")
+    while myName == "":
+        myName = input("Enter your name (put a $ symbol after your name if you wish your preferences to remain private):")
     if myName not in database:
         database[myName] = []
+        print("changed database:")
+        print(database)
+        return False
+    return True
 
 
 def setPreferences():
     global myName, database
+    newArtist = []
     while True:
         artist = input("Enter an artist that you like (Enter to finish):")
         if artist != "":
-            database[myName].append(artist)
-            print(database)
+            newArtist.append(artist)
+            print("new artist: ", newArtist)
         else:
             break
-    writeFile("musicrecplus.txt")
+    if myName != "":
 
-
-# def getRecommendation():
+        database[myName] = sorted(list(set(newArtist)))
 
 
 def printMenu():
@@ -97,14 +100,32 @@ h - How popular is the most popular
 m - Which user has the most likes
 q - Save and quit""")
 
+def printUsersWithMostLikes():
+    ret = []
+    maxNum = 0
+    for key in database:
+        if not isPrivate(key):
+            numOfArtists = len(database[key])
+            print("iterating: ", key, numOfArtists)
+            if numOfArtists >= maxNum:
+                if numOfArtists > maxNum:
+                    ret.clear()
+                ret.append(key)
+                maxNum = numOfArtists
+
+    if maxNum == 0:
+        # def getRecommendation():
+        print("Sorry, no user found")
+    else:
+        for usr in sorted(ret):
+            print(usr)
+
+
+
 
 if __name__ == '__main__':
-    if(readFile("musicrecplus.txt")):
-        firstOpen = False
-        setName()
-
-    else:
-        setName()
+    readFile("musicrecplus.txt")
+    if(not checkName()):
         setPreferences()
 
     while True:
@@ -114,4 +135,9 @@ if __name__ == '__main__':
             setPreferences()
         elif c == 'q':
             break
-    writeFile("musicrecplus.txt")
+        elif c == 'm':
+            printUsersWithMostLikes()
+        elif c == 'd':
+            print(database)
+    if(database != {}):
+        writeFile("musicrecplus.txt")
