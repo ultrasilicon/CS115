@@ -30,12 +30,11 @@ def writeFile(path):
 
 def writeRawData(file):
     for user in database:
-        print(user)
         artists = ""
         for artist in sorted(database[user]):
             artists += artist + ","
         artists = artists[:-1]
-        print("writen: ", artists)
+        # print("writen: ", artists)
         file.write(user + ":" + artists + "\n")
 
 
@@ -83,7 +82,7 @@ def setPreferences():
         artist = input("Enter an artist that you like (Enter to finish):")
         if artist != "":
             newArtist.append(artist)
-            print("new artists: ", newArtist)
+            # print("new artists: ", newArtist)
         else:
             break
     if myName != "":
@@ -106,7 +105,7 @@ def printUsersWithMostLikes():
     for key in database:
         if not isPrivate(key):
             numOfArtists = len(database[key])
-            print("iterating: ", key, numOfArtists)
+            # print("iterating: ", key, numOfArtists)
             if numOfArtists >= maxNum:
                 if numOfArtists > maxNum:
                     ret.clear()
@@ -149,36 +148,40 @@ def printRecommendations():
 
 def getMostPopularArtist():
     global database
-    allPreferences = []
+    allPref = []
     for usr in database:
-        allPreferences += database[usr]
-    allPreferences = sorted(allPreferences)
+        allPref += database[usr]
+    allPref = sorted(allPref)
 
-    artistRanking = {} # name : likes
+    artistRank = {} # name : likes
     currentArtist = ""
-    for artist in allPreferences:
+    for artist in allPref:
         if artist != currentArtist:
             currentArtist = artist
-            artistRanking[artist] = 0
-        artistRanking[artist] = artistRanking[artist] + 1
-    print(artistRanking)
+            artistRank[artist] = 0
+        artistRank[artist] = artistRank[artist] + 1
+    # print(artistRank)
 
     hotList = []
     likes = 0
-    for artist in artistRanking:
-        print(hotList)
-        if artistRanking[artist] > likes:
+    for artist in artistRank:
+        if artistRank[artist] > likes:
             hotList = [artist]
-            likes = artistRanking[artist]
-        elif artistRanking[artist] == likes:
+            likes = artistRank[artist]
+        elif artistRank[artist] == likes:
             hotList.append(artist)
-    print((likes, hotList))
+    hotList = sorted(set(hotList))
+    # print((likes, hotList))
     return (likes, hotList)
 
 
-            
+def printMostPopularArtist():
+    for artist in getMostPopularArtist()[1]:
+        print(artist)
 
 
+def printHowPopular():
+    print(getMostPopularArtist()[0])
 
 
 if __name__ == '__main__':
@@ -200,7 +203,9 @@ if __name__ == '__main__':
         elif c == 'r':
             printRecommendations()
         elif c == 'p':
-            getMostPopularArtist()
+            printMostPopularArtist()
+        elif c == 'h':
+            printHowPopular()
 
     if(database != {}):
         writeFile("musicrecplus.txt")
