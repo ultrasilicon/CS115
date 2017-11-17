@@ -12,11 +12,8 @@ database = {}
 myName = ""
 
 
-def isPrivate(s):
-    return s[-1] == '$'
-
-
 def writeFile(path):
+    '''open a fire descriptor with path 'path' and try to write to it'''
     my_file = Path(path)
     if my_file.is_file():
         file = open(my_file, "w+")
@@ -29,6 +26,7 @@ def writeFile(path):
 
 
 def writeRawData(file):
+    '''write database to file 'file' '''
     for user in database:
         artists = ""
         for artist in sorted(database[user]):
@@ -38,9 +36,10 @@ def writeRawData(file):
         file.write(user + ":" + artists + "\n")
 
 
-def parseRawData(dat):
+def parseRawData(file):
+    '''decode line by ine in the 'file' file'''
     ret = {}
-    for line in dat.read().splitlines():
+    for line in file.read().splitlines():
         fullName, artists = line.split(':')
         artistList = artists.split(',')
         ret[fullName] = sorted(artistList)
@@ -50,6 +49,7 @@ def parseRawData(dat):
 
 
 def readFile(path):
+    '''open a fire descriptor with path 'path' and try to read it'''
     """read from musicrecolus.txt"""
     global database
     my_file = Path(path)
@@ -63,19 +63,37 @@ def readFile(path):
     return False
 
 
+def printMenu():
+    '''print menu'''
+    print("""Enter a letter to choose an option:
+e - Enter preferences
+r - Get recommendations
+p - Show most popular artists
+h - How popular is the most popular
+m - Which user has the most likes
+q - Save and quit""")
+
+
+def isPrivate(s):
+    '''return whether the user s is private'''
+    return s[-1] == '$'
+
+
 def checkName():
+    '''check is the input user name is in the database, if not return false, if true add to database'''
     global myName
     while myName == "":
         myName = input("Enter your name (put a $ symbol after your name if you wish your preferences to remain private):")
     if myName not in database:
         database[myName] = []
-        print("changed database:")
-        print(database)
+        # print("changed database:")
+        # print(database)
         return False
     return True
 
 
 def setPreferences():
+    '''ask user for preferences, and add sorted preferences to database'''
     global myName, database
     newArtist = []
     while True:
@@ -86,20 +104,11 @@ def setPreferences():
         else:
             break
     if myName != "":
-
         database[myName] = sorted(list(set(newArtist)))
 
 
-def printMenu():
-    print("""Enter a letter to choose an option:
-e - Enter preferences
-r - Get recommendations
-p - Show most popular artists
-h - How popular is the most popular
-m - Which user has the most likes
-q - Save and quit""")
-
 def printUsersWithMostLikes():
+    '''print the user names with the largest number of preferences, print not found if not found'''
     ret = []
     maxNum = 0
     for key in database:
@@ -120,6 +129,7 @@ def printUsersWithMostLikes():
 
 
 def isSimilar(usr, other):
+    '''return whether user is similar to other'''
     i = 0
     for artist in usr:
         if artist in other:
@@ -131,6 +141,7 @@ def isSimilar(usr, other):
 
 
 def printRecommendations():
+    '''print the alphabetical recommended artists'''
     artists = []
     recArtists = []
     for usr in database:
@@ -147,13 +158,15 @@ def printRecommendations():
 
 
 def getMostPopularArtist():
+    '''get most popular artist(s) by stupidest algorithm
+    returns a tuple in format: (likes, [artist1, artist2, ....])'''
     global database
     allPref = []
     for usr in database:
         allPref += database[usr]
     allPref = sorted(allPref)
 
-    artistRank = {} # name : likes
+    artistRank = {} # {name1 : likes, name2 : likes, ...}
     currentArtist = ""
     for artist in allPref:
         if artist != currentArtist:
@@ -176,16 +189,19 @@ def getMostPopularArtist():
 
 
 def printMostPopularArtist():
+    '''print the most popular artist'''
     for artist in getMostPopularArtist()[1]:
         print(artist)
 
 
 def printHowPopular():
+    '''print how many subscription the most popular artist has'''
     print(getMostPopularArtist()[0])
 
 
 if __name__ == '__main__':
     readFile("musicrecplus.txt")
+
     if(not checkName()):
         setPreferences()
 
