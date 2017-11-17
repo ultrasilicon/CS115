@@ -148,7 +148,7 @@ class Fraction(object):
         Returns:
             True if this fraction is greater than the other, False otherwise
         '''
-        pass
+        return other < self
 
     def __ge__(self, other):
         '''Determines if this fraction is greater than or equal to another
@@ -161,7 +161,7 @@ class Fraction(object):
             True if this fraction is greater than or equal to the other, False
             otherwise
         '''
-        pass
+        return not self < other
 
     def __float__(self):
         '''Converts a fraction to a floating-point number.
@@ -169,7 +169,7 @@ class Fraction(object):
         Returns:
             the floating-point value of this fraction
         '''
-        pass
+        return float(self.__numerator) / self.__denominator
 
     def __repr__(self):
         '''Gets an official string representation of the fraction.
@@ -177,7 +177,7 @@ class Fraction(object):
         Returns:
             a string in the format Fraction(numerator, denominator)
         '''
-        pass
+        return self.__class__.__name__ + '(' + str(self.__numerator) + ', ' + str(self.__denominator) + ')'
 
     def __str__(self):
         '''Gets a user-friendly string representation of the fraction.
@@ -185,7 +185,7 @@ class Fraction(object):
         Returns:
             a string in the format numerator/denominator
         '''
-        pass
+        return str(self.__numerator) + '/' + str(self.__denominator)
 
 if __name__ == '__main__':
     f = Fraction(2, 5)

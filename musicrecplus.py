@@ -83,7 +83,7 @@ def setPreferences():
         artist = input("Enter an artist that you like (Enter to finish):")
         if artist != "":
             newArtist.append(artist)
-            print("new artist: ", newArtist)
+            print("new artists: ", newArtist)
         else:
             break
     if myName != "":
@@ -114,11 +114,69 @@ def printUsersWithMostLikes():
                 maxNum = numOfArtists
 
     if maxNum == 0:
-        # def getRecommendation():
         print("Sorry, no user found")
     else:
         for usr in sorted(ret):
             print(usr)
+
+
+def isSimilar(usr, other):
+    i = 0
+    for artist in usr:
+        if artist in other:
+            i +=1
+    if i >= 2 and i != len(usr) and i != len(other):
+        return True
+    else:
+        return False
+
+
+def printRecommendations():
+    artists = []
+    recArtists = []
+    for usr in database:
+        if isSimilar(database[myName], database[usr]) and not isPrivate(usr):
+            artists += database[usr]
+    for x in artists:
+        if x not in database[myName]:
+            recArtists.append(x)
+    if recArtists != []:
+        for artist in sorted(list(set(recArtists))):
+            print(artist)
+    else:
+        print("No recommendations available at this time")
+
+
+def getMostPopularArtist():
+    global database
+    allPreferences = []
+    for usr in database:
+        allPreferences += database[usr]
+    allPreferences = sorted(allPreferences)
+
+    artistRanking = {} # name : likes
+    currentArtist = ""
+    for artist in allPreferences:
+        if artist != currentArtist:
+            currentArtist = artist
+            artistRanking[artist] = 0
+        artistRanking[artist] = artistRanking[artist] + 1
+    print(artistRanking)
+
+    hotList = []
+    likes = 0
+    for artist in artistRanking:
+        print(hotList)
+        if artistRanking[artist] > likes:
+            hotList = [artist]
+            likes = artistRanking[artist]
+        elif artistRanking[artist] == likes:
+            hotList.append(artist)
+    print((likes, hotList))
+    return (likes, hotList)
+
+
+            
 
 
 
@@ -139,5 +197,10 @@ if __name__ == '__main__':
             printUsersWithMostLikes()
         elif c == 'd':
             print(database)
+        elif c == 'r':
+            printRecommendations()
+        elif c == 'p':
+            getMostPopularArtist()
+
     if(database != {}):
         writeFile("musicrecplus.txt")
