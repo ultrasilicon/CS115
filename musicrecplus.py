@@ -202,7 +202,7 @@ def printHowPopular():
 if __name__ == '__main__':
     readFile("musicrecplus.txt")
 
-    if(not checkName()):
+    if not checkName():
         setPreferences()
 
     while True:
@@ -223,5 +223,5 @@ if __name__ == '__main__':
         elif c == 'h':
             printHowPopular()
 
-    if(database != {}):
+    if database != {}:
         writeFile("musicrecplus.txt")
