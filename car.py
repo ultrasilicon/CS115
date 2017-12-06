@@ -2,7 +2,7 @@
 CS 115, Lab 12, Inheritance
 
 Author: Han Zheng
-Pledge: "I pledge my honor that I have abided by the Stevens Honor System." - hzheng12 
+Pledge: "I pledge my honor that I have abided by the Stevens Honor System." - hzheng12
 '''
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
